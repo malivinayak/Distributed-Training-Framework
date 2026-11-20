@@ -10,4 +10,3 @@ Learning Concepts hands-on from scratch
 5. Data Loader, Packing and gradient adjustment
 6. Loss-Free MoE Load Balancing
 7. DTensor and collective operation
-8. 
