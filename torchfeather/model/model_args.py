@@ -56,4 +56,16 @@ class DeepSeekV3ModelArgs:
             else:
                 nparams_dense += p.numel()
 
+        nparams_sparse = nparams_moe_router + nparams_shared_experts + nparams_experts
+        nparams = nparams_dense + nparams_sparse
+        nparams_sparse_active = (
+            nparams_moe_router 
+            + nparams_shared_experts
+            + nparams_experts * self.moe_args.top_k // self.moe_args.num_experts
+        )
+
+        logger.info(
+            f"Total parameter count: dense{nparams_dense:,}, "
+            f"sparse {nparams_sparse:,}, active {nparams_dense + nparams_sparse_active:,}"
+        )
         
