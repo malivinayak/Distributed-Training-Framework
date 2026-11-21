@@ -51,6 +51,8 @@ class DeepSeekV3ModelArgs:
                 nparams_shared_experts += p.numel()
             elif "moe.router" in name:
                 nparams_moe_router += p.numel()
+            elif "moe.experts" in name:
+                nparams_experts += p.numel()
             else:
                 nparams_dense += p.numel()
 
