@@ -35,3 +35,6 @@ class DeepSeekV3ModelArgs:
     beta_fast: int = 32
     beta_slow: int = 1
     mscale: float = 1.0
+
+    def get_nparams_and_flops(self, model: nn.Module, seq_len: int)->tuple[int, int]:
+        pass
