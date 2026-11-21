@@ -37,4 +37,21 @@ class DeepSeekV3ModelArgs:
     mscale: float = 1.0
 
     def get_nparams_and_flops(self, model: nn.Module, seq_len: int)->tuple[int, int]:
-        pass
+        nparams_embedding = 0
+        nparams_moe_router = 0
+        nparams_shared_experts = 0
+        nparams_experts = 0
+        nparams_dense = 0
+
+        for name, p in model.named_parameters():
+            if "embedding" in name:
+                nparams_embedding += p.numel()
+                nparams_dense += p.numel()
+            elif "moe.shared_experts" in name:
+                nparams_shared_experts += p.numel()
+            elif "moe.router" in name:
+                nparams_moe_router += p.numel()
+            else:
+                nparams_dense += p.numel()
+
+        
