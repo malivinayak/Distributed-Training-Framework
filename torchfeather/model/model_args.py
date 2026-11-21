@@ -68,4 +68,14 @@ class DeepSeekV3ModelArgs:
             f"Total parameter count: dense{nparams_dense:,}, "
             f"sparse {nparams_sparse:,}, active {nparams_dense + nparams_sparse_active:,}"
         )
-        
+
+        n_layers = self.n_layers
+        n_heads = self.n_heads
+        head_dims = self.qk_nope_head_dim + self.qk_rope_head_dim + self.v_head_dim
+
+        num_flops_per_token = (
+            6 * (nparams_dense - nparams_embedding + nparams_sparse_active)
+            + 6 * n_layers * n_heads * head_dims * seq_len
+        )
+
+        return nparams, num_flops_per_token
